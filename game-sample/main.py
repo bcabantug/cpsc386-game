@@ -2,6 +2,7 @@ import pygame
 from global_inst import *
 from player import Player
 from enemy import Enemy
+import copy #for use with calculating score
 
 
 def GameLoop():
@@ -25,9 +26,19 @@ def GameLoop():
         ALL_SPRITES.add(enemy)
         ENEMIES.add(enemy)
 
+    ltime = 0 #last time that there before the next tick of ms since start of game
     running = True
     while running:
-        clock.tick(FPS)
+        clock.tick_busy_loop(FPS) #gets the total ms since init
+
+        ms = int(pygame.time.get_ticks()/1000) #get total amount of seconds passed since init
+
+        if(ms-ltime>=1): #if a second has passed
+            score += 1 #add 1 to the score
+            print("Score: ", score)
+
+        ltime = copy.deepcopy(ms) #copys the ms that has passed so that it can keep track of seconds passsed
+
         # Events:
         for event in pygame.event.get():
             # check for closing the window
@@ -45,15 +56,15 @@ def GameLoop():
         # if hit,
         for hit in hit1:
             # bunnies will accelerate their speeds when getting more scores
-            score += 1
+            score += 10
             print("Score: ", score)
-            if 5 <= score < 10:
+            if 250 <= score < 500:
                 acc = 1
-            if 10 <= score < 15:
+            if 500 <= score < 750:
                 acc = 2
-            if 15 <= score < 20:
+            if 750 <= score < 1250:
                 acc = 3
-            if score >= 20:
+            if score >= 1250:
                 acc = 4
             # create a new bunny
             enemy = Enemy(acc)
