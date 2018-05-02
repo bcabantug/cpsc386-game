@@ -1,14 +1,14 @@
 import pygame
 import os
-from global_inst import RED, IMG_FOLDER
+from global_inst import IMG_FOLDER, WHITE
 
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join(IMG_FOLDER, "carrot.png")).convert()
-        #self.image = pygame.Surface((10, 25))
-        #self.image.fill(RED)
+        self.image = pygame.transform.scale(self.image, (15, 35))
+        self.image.set_colorkey(WHITE)
         self.rect = self.image.get_rect()
         self.rect.bottom = y
         self.rect.centerx = x
@@ -18,3 +18,4 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         if self.rect.bottom < 0:
             self.kill()
+

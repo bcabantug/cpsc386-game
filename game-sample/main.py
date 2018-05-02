@@ -1,51 +1,33 @@
 import pygame
 from global_inst import *
-from bunny import Bunny
+from player import Player
 from enemy import Enemy
-import copy
 
 
 def GameLoop():
+    score = 0
+    acc = 0
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("My game")
     clock = pygame.time.Clock()
+    # NEED A BACKGROUND IMAGE
+    background = pygame.image.load(os.path.join(IMG_FOLDER, "background.png")).convert()
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    background_position_y = 0
 
-    my_font = pygame.font.SysFont("Calibri", 50, True, False)
-    score = 0;
-
-    # score = 0;
-    # scoretext = small_font.render("Score: " + str(score), 1, RED)
-
-    player = Bunny()
+    player = Player()
     ALL_SPRITES.add(player)
+
     for i in range(8):
-        enemy = Enemy()
+        enemy = Enemy(acc)
         ALL_SPRITES.add(enemy)
         ENEMIES.add(enemy)
 
-    text_player_name = my_font.render("YOU", False, RED)
-
-    ltime=0
-
     running = True
     while running:
-
-        clock.tick_busy_loop(FPS)
-        #clock.tick(FPS)
-        #ms = clock.get_time()
-        ms = int(pygame.time.get_ticks()/1000)
-
-        #print (ms-ltime)
-
-        if (ms-ltime >=1):
-            score = score + 1
-            print(score)
-
-        ltime = copy.deepcopy(ms)
-
-        # screen.blit(scoretext, (5, 10));
+        clock.tick(FPS)
         # Events:
         for event in pygame.event.get():
             # check for closing the window
@@ -57,25 +39,45 @@ def GameLoop():
 
         # Update:
         ALL_SPRITES.update()
+
         # check hit between ENEMIES and BULLETS groups
         hit1 = pygame.sprite.groupcollide(ENEMIES, BULLETS, True, True)
-        # if hit, create a new enemy
+        # if hit,
         for hit in hit1:
-            score = score + 10
-            print("score:"+ str(score))
-            enemy = Enemy()
+            # bunnies will accelerate their speeds when getting more scores
+            score += 1
+            print("Score: ", score)
+            if 5 <= score < 10:
+                acc = 1
+            if 10 <= score < 15:
+                acc = 2
+            if 15 <= score < 20:
+                acc = 3
+            if score >= 20:
+                acc = 4
+            # create a new bunny
+            enemy = Enemy(acc)
             ALL_SPRITES.add(enemy)
             ENEMIES.add(enemy)
 
         # check hit between player and ENEMIES
         hit2 = pygame.sprite.spritecollide(player, ENEMIES, False)
         if hit2:
-            print("GAME OVER")
-            running = False
+            pass
+            #print("GAME OVER")
+            #running = False
 
         # Draw updates:
         screen.fill(WHITE)
+        # scrolling background
+        check_y = background_position_y % background.get_rect().height
+        screen.blit(background, (0, check_y - background.get_rect().height))
+        if check_y < HEIGHT:
+            screen.blit(background, (0, check_y))
+        background_position_y += 1
+
         ALL_SPRITES.draw(screen)
+
 
         pygame.display.flip()
     pygame.quit()
