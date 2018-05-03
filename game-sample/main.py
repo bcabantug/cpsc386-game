@@ -41,7 +41,7 @@ def GameLoop():
 
         if (ms-ltime >=1):
             score = score + 1
-            print(score)
+            #print(score)
 
         ltime = copy.deepcopy(ms)
 
