@@ -8,6 +8,11 @@ import copy #for use with calculating score
 def GameLoop():
     score = 0
     acc = 0
+    #font
+    pygame.font.init()
+    myfont = pygame.font.SysFont("Comic Sans MS", 30)
+    scoretext = myfont.render("Score: " + str(score),False ,BLUE)
+    #
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -37,7 +42,7 @@ def GameLoop():
             score += 1 #add 1 to the score
             print("Score: ", score)
 
-        ltime = copy.deepcopy(ms) #copys the ms that has passed so that it can keep track of seconds passsed
+        ltime = copy.deepcopy(ms) #copys the ms that has passed so that it can keep track of seconds passed
 
         # Events:
         for event in pygame.event.get():
@@ -80,6 +85,7 @@ def GameLoop():
 
         # Draw updates:
         screen.fill(WHITE)
+
         # scrolling background
         check_y = background_position_y % background.get_rect().height
         screen.blit(background, (0, check_y - background.get_rect().height))
@@ -88,7 +94,9 @@ def GameLoop():
         background_position_y += 1
 
         ALL_SPRITES.draw(screen)
-
+        #score
+        scoretext = myfont.render("Score: " + str(score),False ,BLUE)
+        screen.blit(scoretext, (20,20))
 
         pygame.display.flip()
     pygame.quit()
