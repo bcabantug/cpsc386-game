@@ -6,6 +6,8 @@ import copy #for use with calculating score
 
 
 def GameLoop():
+
+
     score = 0
     acc = 0
     #font
@@ -16,10 +18,10 @@ def GameLoop():
     pygame.init()
     pygame.mixer.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("My game")
+    pygame.display.set_caption("Carrot Time!")
     clock = pygame.time.Clock()
     # NEED A BACKGROUND IMAGE
-    background = pygame.image.load(os.path.join(IMG_FOLDER, "background.png")).convert()
+    background = pygame.image.load(os.path.join(IMG_FOLDER, "tmpback.png")).convert()
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     background_position_y = 0
 
@@ -32,6 +34,7 @@ def GameLoop():
         ENEMIES.add(enemy)
 
     ltime = 0 #last time that there before the next tick of ms since start of game
+    bgm.play(-1)
     running = True
     while running:
         clock.tick_busy_loop(FPS) #gets the total ms since init
@@ -61,6 +64,7 @@ def GameLoop():
         # if hit,
         for hit in hit1:
             # bunnies will accelerate their speeds when getting more scores
+            #feed_sound.play()
             score += 10
             print("Score: ", score)
             if 250 <= score < 500:
@@ -82,6 +86,7 @@ def GameLoop():
             pass
             #print("GAME OVER")
             #running = False
+            #bgm.stop()
 
         # Draw updates:
         screen.fill(WHITE)
