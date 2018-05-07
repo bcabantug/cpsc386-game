@@ -3,12 +3,12 @@ import os
 from global_inst import *
 from bullet import Bullet
 
-class Bunny(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join(IMG_FOLDER, "player.png")).convert()
-        #self.image = pygame.Surface((50, 40))
-        #self.image.fill(BLUE)
+        #self.image = pygame.image.load(os.path.join(IMG_FOLDER, "")).convert()
+        self.image = pygame.Surface((50, 40))
+        self.image.fill(BLUE)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.centery = HEIGHT - 50
