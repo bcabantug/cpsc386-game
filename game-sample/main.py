@@ -3,23 +3,24 @@ from global_inst import *
 from player import Player
 from enemy import Enemy
 import copy #for use with calculating score
+from menu import *
+from highscores import *
 
 
-def GameLoop():
 
-
+def GameLoop(scores):
     score = 0
     acc = 0
+
     #font
     pygame.font.init()
-    myfont = pygame.font.SysFont("Comic Sans MS", 30)
-    scoretext = myfont.render("Score: " + str(score),False ,BLUE)
-    #
-    pygame.init()
-    pygame.mixer.init()
+    myfont = pygame.font.SysFont("Comic Sans", 30)
+    scoretext = myfont.render("Score: " + str(score),False ,ORANGE)
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Carrot Time!")
     clock = pygame.time.Clock()
+
     # NEED A BACKGROUND IMAGE
     background = pygame.image.load(os.path.join(IMG_FOLDER, "tmpback.png")).convert()
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
@@ -35,6 +36,7 @@ def GameLoop():
 
     ltime = 0 #last time that there before the next tick of ms since start of game
     bgm.play(-1)
+
     running = True
     while running:
         clock.tick_busy_loop(FPS) #gets the total ms since init
@@ -46,6 +48,7 @@ def GameLoop():
             print("Score: ", score)
 
         ltime = copy.deepcopy(ms) #copys the ms that has passed so that it can keep track of seconds passed
+
 
         # Events:
         for event in pygame.event.get():
@@ -73,8 +76,14 @@ def GameLoop():
                 acc = 2
             if 750 <= score < 1250:
                 acc = 3
-            if score >= 1250:
+            if score >= 1250 < 2250:
                 acc = 4
+            if score >= 2250 < 3500:
+                acc = 5
+            if score >= 3500 < 5000:
+                acc = 6
+            if score >= 5000 < 10000:
+                acc = 7
             # create a new bunny
             enemy = Enemy(acc)
             ALL_SPRITES.add(enemy)
@@ -83,10 +92,19 @@ def GameLoop():
         # check hit between player and ENEMIES
         hit2 = pygame.sprite.spritecollide(player, ENEMIES, False)
         if hit2:
-            pass
-            #print("GAME OVER")
-            #running = False
-            #bgm.stop()
+            #pass
+            print("GAME OVER")
+            #print(score)
+            # if not scoreslist:
+            #     scoreslist  = [1,2,3]
+            for i in scores:
+                print(i)
+            addScore(score, scores)
+            saveScores(scores)
+            bgm.stop()
+
+            running = False
+
 
         # Draw updates:
         screen.fill(WHITE)
@@ -99,8 +117,9 @@ def GameLoop():
         background_position_y += 1
 
         ALL_SPRITES.draw(screen)
+
         #score
-        scoretext = myfont.render("Score: " + str(score),False ,BLUE)
+        scoretext = myfont.render("Score: " + str(score),False ,ORANGE)
         screen.blit(scoretext, (20,20))
 
         pygame.display.flip()
@@ -108,5 +127,12 @@ def GameLoop():
 
 
 if __name__ == "__main__":
-    GameLoop()
+    pygame.init()
+    pygame.mixer.init()
+    scoreslist = loadFile()
+    for i in scoreslist:
+        print(i)
+    print("end read")
+    menu = pygame.display.set_mode((WIDTH, HEIGHT))
+    Menu(scoreslist)
     quit()
