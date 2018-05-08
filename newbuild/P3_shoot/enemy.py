@@ -21,4 +21,3 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.x = random.randrange(WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100, -40)
             self.speedy = 3 + self.acc
-

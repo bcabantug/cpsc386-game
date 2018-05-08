@@ -1,9 +1,6 @@
 import os
 import pygame
 
-REPLAY = True
-SCORE = 0
-MS = 0
 WIDTH = 480
 HEIGHT = 600
 FPS = 60
@@ -21,3 +18,6 @@ SOUND_FOLDER = os.path.join(GAME_FOLDER, "sound")
 ALL_SPRITES = pygame.sprite.Group()
 BULLETS = pygame.sprite.Group()
 ENEMIES = pygame.sprite.Group()
+
+
+
