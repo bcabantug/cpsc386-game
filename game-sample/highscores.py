@@ -14,7 +14,7 @@ def loadFile():
 
     scorefile = []
     for f in scores:
-        print(f)
+        # print(f)
         scorefile.append(int(f))
     return scorefile
 
@@ -36,4 +36,3 @@ def saveScores (scored):
     for s in scored:
         f.write("%i\n" % s)
     f.close()
-

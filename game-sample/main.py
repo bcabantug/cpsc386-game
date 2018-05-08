@@ -94,14 +94,14 @@ def GameLoop(scores):
         if hit2:
             #pass
             print("GAME OVER")
-            #print(score)
-            # if not scoreslist:
-            #     scoreslist  = [1,2,3]
-            for i in scores:
-                print(i)
+            # for i in scores:
+            #     print(i)
             addScore(score, scores)
             saveScores(scores)
-            bgm.stop()
+            # bgm.stop()
+            screen.fill(WHITE)
+            print("end it")
+            pygame.display.flip()
 
             running = False
 
@@ -123,16 +123,16 @@ def GameLoop(scores):
         screen.blit(scoretext, (20,20))
 
         pygame.display.flip()
-    pygame.quit()
+    # pygame.quit()
 
 
 if __name__ == "__main__":
     pygame.init()
     pygame.mixer.init()
     scoreslist = loadFile()
-    for i in scoreslist:
-        print(i)
-    print("end read")
+    # for i in scoreslist:
+    #     print(i)
+    # print("end read")
     menu = pygame.display.set_mode((WIDTH, HEIGHT))
     Menu(scoreslist)
     quit()
