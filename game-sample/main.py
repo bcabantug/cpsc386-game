@@ -3,20 +3,18 @@ from global_inst import *
 from player import Player
 from enemy import Enemy
 import copy #for use with calculating score
+from menu import *
 
 
 def GameLoop():
-
-
     score = 0
     acc = 0
+
     #font
     pygame.font.init()
-    myfont = pygame.font.SysFont("Comic Sans MS", 30)
-    scoretext = myfont.render("Score: " + str(score),False ,BLUE)
-    #
-    pygame.init()
-    pygame.mixer.init()
+    myfont = pygame.font.SysFont("Comic Sans", 30)
+    scoretext = myfont.render("Score: " + str(score),False ,ORANGE)
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Carrot Time!")
     clock = pygame.time.Clock()
@@ -74,8 +72,14 @@ def GameLoop():
                 acc = 2
             if 750 <= score < 1250:
                 acc = 3
-            if score >= 1250:
+            if score >= 1250 < 2250:
                 acc = 4
+            if score >= 2250 < 3500:
+                acc = 5
+            if score >= 3500 < 5000:
+                acc = 6
+            if score >= 5000 < 10000:
+                acc = 7
             # create a new bunny
             enemy = Enemy(acc)
             ALL_SPRITES.add(enemy)
@@ -85,9 +89,10 @@ def GameLoop():
         hit2 = pygame.sprite.spritecollide(player, ENEMIES, False)
         if hit2:
             pass
-            #print("GAME OVER")
-            #running = False
-            #bgm.stop()
+            # print("GAME OVER")
+            # bgm.stop()
+            # running = False
+
 
         # Draw updates:
         screen.fill(WHITE)
@@ -100,8 +105,9 @@ def GameLoop():
         background_position_y += 1
 
         ALL_SPRITES.draw(screen)
+
         #score
-        scoretext = myfont.render("Score: " + str(score),False ,BLUE)
+        scoretext = myfont.render("Score: " + str(score),False ,ORANGE)
         screen.blit(scoretext, (20,20))
 
         pygame.display.flip()
@@ -109,5 +115,8 @@ def GameLoop():
 
 
 if __name__ == "__main__":
-    GameLoop()
+    pygame.init()
+    pygame.mixer.init()
+    menu = pygame.display.set_mode((WIDTH, HEIGHT))
+    Menu()
     quit()

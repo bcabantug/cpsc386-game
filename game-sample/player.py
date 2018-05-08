@@ -6,10 +6,10 @@ from bullet import Bullet
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join(IMG_FOLDER, "movement.png")).convert()
+        self.image = pygame.image.load(os.path.join(IMG_FOLDER, "CarrotTime-EvenSmallerCharnew.png")).convert_alpha()
         self.image = pygame.transform.scale(self.image, (50, 40))
         #self.image = pygame.Surface((50, 40))
-        self.image.set_colorkey(BLUE)
+        #self.image.set_colorkey(BLUE)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.centery = HEIGHT - 50
@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
 
     def shoot(self):
-        print("shoot")
+        # print("shoot")
         shoot_sound.play()
         bullet = Bullet(self.rect.centerx, self.rect.top)
         ALL_SPRITES.add(bullet)
