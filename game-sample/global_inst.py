@@ -2,7 +2,7 @@ import os
 import pygame
 
 
-
+#constants
 WIDTH = 480
 HEIGHT = 600
 FPS = 60
@@ -32,4 +32,5 @@ bgm.set_volume(1)
 
 # feed_sound = pygame.mixer.Sound(os.path.join(SOUND_FOLDER, "carrotchew.wav"))
 # feed_sound.set_volume(1)
+
 

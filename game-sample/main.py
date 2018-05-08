@@ -4,9 +4,11 @@ from player import Player
 from enemy import Enemy
 import copy #for use with calculating score
 from menu import *
+from highscores import *
 
 
-def GameLoop():
+
+def GameLoop(scores):
     score = 0
     acc = 0
 
@@ -18,6 +20,7 @@ def GameLoop():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Carrot Time!")
     clock = pygame.time.Clock()
+
     # NEED A BACKGROUND IMAGE
     background = pygame.image.load(os.path.join(IMG_FOLDER, "tmpback.png")).convert()
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
@@ -33,6 +36,7 @@ def GameLoop():
 
     ltime = 0 #last time that there before the next tick of ms since start of game
     bgm.play(-1)
+
     running = True
     while running:
         clock.tick_busy_loop(FPS) #gets the total ms since init
@@ -88,10 +92,18 @@ def GameLoop():
         # check hit between player and ENEMIES
         hit2 = pygame.sprite.spritecollide(player, ENEMIES, False)
         if hit2:
-            pass
-            # print("GAME OVER")
-            # bgm.stop()
-            # running = False
+            #pass
+            print("GAME OVER")
+            #print(score)
+            # if not scoreslist:
+            #     scoreslist  = [1,2,3]
+            for i in scores:
+                print(i)
+            addScore(score, scores)
+            saveScores(scores)
+            bgm.stop()
+
+            running = False
 
 
         # Draw updates:
@@ -117,6 +129,10 @@ def GameLoop():
 if __name__ == "__main__":
     pygame.init()
     pygame.mixer.init()
+    scoreslist = loadFile()
+    for i in scoreslist:
+        print(i)
+    print("end read")
     menu = pygame.display.set_mode((WIDTH, HEIGHT))
-    Menu()
+    Menu(scoreslist)
     quit()
