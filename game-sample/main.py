@@ -104,8 +104,11 @@ def GameLoop(scores):
             pygame.display.flip()
 
             running = False
+            # return
 
 
+        if running == False:
+            print("hi")
         # Draw updates:
         screen.fill(WHITE)
 

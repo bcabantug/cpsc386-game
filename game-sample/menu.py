@@ -43,6 +43,7 @@ def button(scores, text, inactive_color, active_color, x, y, w, h, action=None):
                 # click_sound.play()
                 pygame.time.wait(300)
                 GameLoop(scores)
+                Menu(scores) #returns to menu
             if action == "2":
                 bgm.stop()
                 # click_sound.play()
